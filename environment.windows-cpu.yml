@@ -8,4 +8,4 @@ dependencies:
 - git
 - pip:
   - -r requirements-tested-windows-cpu.txt
-  - ppg-experiment-framework[workshop] @ git+https://github.com/mamerm/ppg-workshop-runtime.git@v0.1.3
+  - ppg-experiment-framework[workshop] @ git+https://github.com/PPG-BP-Framework/ppg-workshop.git@v0.1.4

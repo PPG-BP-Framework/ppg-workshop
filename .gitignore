@@ -1,4 +1,4 @@
-# Keep private distribution artifacts and local data out of the public template.
+# Keep local artifacts and data out of Git; the release runtime lives in artifacts/.
 packages/*.whl
 bundles/
 data/
@@ -15,3 +15,5 @@ __pycache__/
 .env
 *.log
 environment.local.yml
+
+dist/

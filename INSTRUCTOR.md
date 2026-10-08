@@ -2,7 +2,7 @@
 
 ## Before participants arrive
 
-1. Grant each participant access to the private `mamerm/ppg-workshop-runtime` repository; share the pip command in README.md.
+1. Share https://github.com/PPG-BP-Framework/ppg-workshop and the public setup commands in README.md. No participant invitation or login is needed.
 2. Ask participants to run the environment setup before the workshop. Use Windows CPU for the validated setup.
 3. Run the notebook download cell in advance (approximately 2.7 GB archive plus extraction). The local prepared copy already has these cached.
 4. Run `python execute_workshop.py --notebook workshop.ipynb --workspace . --output workshop.executed.ipynb --kernel ppg-workshop-showcase`.
@@ -18,9 +18,7 @@ rates first, then optionally add a second batch size (maximum four candidates).
 Explain the instructor model's selected held-out window with Integrated Gradients
 after the exercise. Point out the reference, prediction and convergence delta.
 
-Share this public teaching repository freely. Keep old source-wheel installer and
-ZIP repositories instructor-only; grant runtime access to `mamerm/ppg-workshop-runtime`
-for the CPython 3.11 bytecode distribution.
+The compiled CPython 3.11 runtime is included in this public repository. Participants clone it and install with `python -m pip install ".[workshop]"`.
 
 ## Suggested 90-minute workshop
 
@@ -56,8 +54,8 @@ new split/normalization artifacts, so reserve them for advanced participants.
 ## Files to distribute
 
 The GitHub template contains teaching code, configs and environment definitions.
-The private installer repository supplies the library to pip using participant GitHub authentication.
-The ignored data and weights are fetched by the notebook. Participants generate their notebook and tasks with `ppg-workshop init` after pip installation. They do not need the older private ZIP bundle.
+The artifacts/ directory in this public repository supplies the compiled library to pip without authentication.
+The ignored data and weights are fetched by the notebook. Participants generate their notebook and tasks with `ppg-workshop init` after pip installation. No separate installer repository or ZIP bundle is needed.
 
 ## Teaching boundaries
 

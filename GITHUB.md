@@ -1,35 +1,18 @@
-# Teaching repository and private runtime
+# One public workshop repository
 
-- Public teaching materials: https://github.com/PPG-BP-Framework/ppg-workshop
-- Private pip runtime: https://github.com/mamerm/ppg-workshop-runtime
+https://github.com/PPG-BP-Framework/ppg-workshop contains the teaching notebooks,
+configuration, environment/setup scripts and the compiled framework wheel.
+No other repository or participant authentication is required.
 
-Participants can read/download these notebooks and configs without authentication.
-To run them, the instructor grants each participant access to the private runtime
-repository. Follow README.md for Git authentication and the exact pip command.
-Installation also bundles both notebooks; `ppg-workshop init ./my-ppg-workshop`
-generates them and their task folders without a manual repository download.
+After cloning, install with `python -m pip install ".[workshop]"`. Alternatively,
+use the versioned public Git pip command in README.md. `distribution.json` identifies
+the included wheel and checksum; `wheel_backend.py` returns that verified wheel to pip.
 
-The runtime has CPython 3.11 bytecode instead of readable framework source modules.
-This discourages casual inspection but does not prevent reverse engineering.
-The public teaching repository contains neither that wheel nor the older readable
-source wheels. It has a fresh history, independent of older instructor repositories.
+For updates, commit intended teaching changes and push to main. New runtime versions
+need a new wheel, manifest, installation.json and Git tag; do not replace an existing
+tag's artifact. Keep datasets, weights, temporary outputs and source wheels out of Git.
+Only the intended CPython bytecode runtime belongs in artifacts/.
 
-## Upload future teaching changes
-
-Edit this repository's notebooks, configs or documents, then review the files:
-
-```sh
-git status
-git diff
-```
-
-Stage only intended teaching changes, commit them, then run `git push origin main`.
-Do not add private wheels, source archives, data, weights, executed notebooks or
-local results. The supplied .gitignore excludes those artifact folders.
-
-## Export an environment
-
-Run `python export_environment.py` inside the activated workshop environment.
-The generated environment.exported.yml removes the machine prefix and uses the
-version-pinned private installer URL. It remains platform-specific. Recreating it
-requires Git authentication and access to the runtime repository.
+Run `python export_environment.py` to export the active environment with the public
+installer URL. Environment snapshots remain platform-specific. Nothing uses a private
+installer or requires GitHub login.

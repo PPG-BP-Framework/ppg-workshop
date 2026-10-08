@@ -15,7 +15,7 @@ import yaml
 
 
 def export_environment(*, conda: str, output: Path, name: str) -> None:
-    """Save a platform-specific snapshot with an authenticated private pip requirement."""
+    """Save a platform-specific snapshot with an public pip requirement."""
     result = subprocess.run(
         [conda, "env", "export", "--prefix", sys.prefix, "--no-builds", "--json"],
         check=True, capture_output=True, text=True, encoding="utf-8",
