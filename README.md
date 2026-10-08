@@ -5,7 +5,11 @@ configs, task templates, environment files and the compiled framework wheel in
 `artifacts/`. No private repository, invitation, GitHub login or token is required.
 The notebook downloads DaLiA and PaPaGei weights separately.
 
-## Step-by-step setup
+## Step-by-step CPU setup
+
+The existing `ppg_workshop_showcase` environment, `setup.ps1` and
+`environment.windows-cpu.yml` use CPU PyTorch. Keep using them for CPU runs.
+For an NVIDIA GPU, use the separate [GPU setup](#nvidia-gpu-setup-windows) below.
 
 ### 1. Open a conda terminal
 
@@ -92,6 +96,60 @@ jupyter lab workshop.ipynb
 
 Replace the path with your actual clone. Keep the terminal open while using Jupyter;
 stop its server with Ctrl+C afterwards. There is no need to recreate the environment.
+
+## NVIDIA GPU setup (Windows)
+
+Use a separate **`ppg_workshop_gpu`** environment for the full `workshop.ipynb`.
+The existing CPU environment and notebooks stay unchanged. You need an NVIDIA
+GPU and a driver compatible with CUDA 12.8; check that `nvidia-smi` recognizes it.
+This uses the [official PyTorch 2.8 CUDA 12.8 wheel](https://pytorch.org/get-started/previous-versions/#v280).
+
+From a conda-enabled terminal, inside your cloned `ppg-workshop` folder:
+
+```sh
+conda create -n ppg_workshop_gpu --override-channels -c conda-forge python=3.11.17 pip git -y
+conda activate ppg_workshop_gpu
+python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cu128
+python -m pip install ".[workshop]"
+python -m pip check
+python -c "import torch; assert torch.cuda.is_available(), 'CUDA unavailable'; print(torch.__version__, torch.cuda.get_device_name(0)); print(torch.ones(1, device='cuda').cpu())"
+python -m ipykernel install --sys-prefix --name ppg-workshop-gpu --display-name "PPG Workshop GPU"
+```
+
+Do not install `requirements-tested-windows-cpu.txt` or run `setup.ps1` in this
+GPU environment: those select CPU PyTorch. The matching environment definition
+is [environment.windows-gpu.yml](environment.windows-gpu.yml), which can also be
+created with `conda env create -f environment.windows-gpu.yml`; then activate it,
+run the checks above and register its kernel.
+
+Before starting Jupyter, select CUDA using the full notebook's existing setting.
+In **PowerShell**:
+
+```powershell
+conda activate ppg_workshop_gpu
+$env:PPG_WORKSHOP_DEVICE = "cuda"
+jupyter lab workshop.ipynb
+```
+
+In **Anaconda/Miniconda Prompt (cmd)** instead:
+
+```bat
+conda activate ppg_workshop_gpu
+set PPG_WORKSHOP_DEVICE=cuda
+jupyter lab workshop.ipynb
+```
+
+Select **PPG Workshop GPU** in Jupyter (Kernel -> Change Kernel). Start Jupyter
+from this terminal so its kernel inherits the setting, and set it again whenever
+you open a new terminal. Without it, the full notebook defaults to CPU even if
+CUDA PyTorch is installed. For later GPU sessions, only activation, the device
+setting and the Jupyter command are needed.
+
+**`workshop_cpu_short.ipynb` explicitly selects CPU.** It stays a CPU example even
+when opened with the GPU kernel. For CPU sessions, use the CPU setup above and
+clear `PPG_WORKSHOP_DEVICE` if reusing the same terminal (`Remove-Item
+Env:PPG_WORKSHOP_DEVICE -ErrorAction SilentlyContinue` in PowerShell, or
+`set PPG_WORKSHOP_DEVICE=` in cmd).
 
 ## Install directly with pip without cloning manually
 

@@ -1,0 +1,12 @@
+name: ppg_workshop_gpu
+channels:
+- conda-forge
+- nodefaults
+dependencies:
+- python=3.11.17
+- pip
+- git
+- pip:
+  - --extra-index-url https://download.pytorch.org/whl/cu128
+  - torch==2.8.0+cu128
+  - ppg-experiment-framework[workshop] @ git+https://github.com/PPG-BP-Framework/ppg-workshop.git@v0.1.4
