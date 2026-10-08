@@ -26,24 +26,142 @@ follow this README without cloning this repository.
 Downloads must be completed before class. The short profile reduces processing
 and training time, not the size of the original DaLiA download.
 
-## Clone with notebooks ready to open
+## Step-by-step setup and launch
 
-Both notebooks above are committed directly in this repository. To get them:
+**`pip install` does not create an environment.** Conda creates the environment;
+activation selects it; `python -m pip install` puts the workshop library and its
+dependencies into that active environment. The notebooks and saved-output examples
+are already in this repository and remain unchanged.
+
+### 1. Open a conda terminal
+
+Install Miniconda or Anaconda if you do not already have it. On Windows, open
+**Miniconda Prompt** or **Anaconda Prompt**. On macOS/Linux, use a terminal where
+`conda` is initialized. Check:
+
+```sh
+conda --version
+```
+
+### 2. Create and activate the workshop environment
+
+Use **CPython 3.11**, which is required by the compiled runtime:
+
+```sh
+conda create -n ppg_workshop_showcase --override-channels -c conda-forge python=3.11 pip git -y
+conda activate ppg_workshop_showcase
+python --version
+```
+
+The last command should report Python 3.11.x. If this environment already exists,
+skip `conda create` and just activate it. Keep this terminal open for the next steps.
+
+### 3. Get access and authenticate GitHub
+
+Ask the instructor to grant your GitHub account access to
+[mamerm/ppg-workshop-runtime](https://github.com/mamerm/ppg-workshop-runtime), and
+accept the invitation. Authentication to the private runtime is needed even if you
+clone the public teaching repository.
+
+Authenticate Git using Git Credential Manager's sign-in flow, or, if you have
+GitHub CLI installed, run:
+
+```sh
+gh auth login
+gh auth setup-git
+```
+
+Verify that Git can access the runtime:
+
+```sh
+git ls-remote https://github.com/mamerm/ppg-workshop-runtime.git
+```
+
+Success prints Git references. If you see `Repository not found` or an authentication
+error, check that you accepted the invitation and signed into the correct account.
+Do not paste access tokens into notebooks or the install command.
+
+### 4. Clone this repository and enter its folder
+
+Run this from the parent folder where you want to keep the workshop:
 
 ```sh
 git clone https://github.com/PPG-BP-Framework/ppg-workshop.git
 cd ppg-workshop
-conda create -n ppg_workshop_showcase --override-channels -c conda-forge python=3.11 pip git -y
-conda activate ppg_workshop_showcase
+```
+
+If you already cloned it, enter that existing folder and run `git pull` instead.
+Both `workshop.ipynb` and `workshop_cpu_short.ipynb` are immediately available,
+along with `configs/`. There is no need to run `ppg-workshop init` for this route.
+
+### 5. Install into the active environment
+
+For the exact tested **Windows CPU** dependencies, run this first, from the cloned
+folder (skip this platform-specific snapshot on macOS/Linux):
+
+```sh
+python -m pip install -r requirements-tested-windows-cpu.txt
+```
+
+Then install the workshop runtime and its notebook dependencies on any platform:
+
+```sh
 python -m pip install "ppg-experiment-framework[workshop] @ git+https://github.com/mamerm/ppg-workshop-runtime.git@v0.1.3"
+python -m pip check
+```
+
+`pip check` should report `No broken requirements found`. Installation can take a
+few minutes the first time. This uses the environment activated in step 2; it does
+not create a separate venv. Windows CPU is the validated platform.
+
+### 6. Register the Jupyter kernel
+
+```sh
 python -m ipykernel install --sys-prefix --name ppg-workshop-showcase --display-name "PPG Workshop Showcase"
+```
+
+This makes Jupyter use the environment containing the installed framework.
+
+### 7. Open and run a notebook
+
+For the full workshop:
+
+```sh
+jupyter lab workshop.ipynb
+```
+
+For the shorter two-fold CPU workshop:
+
+```sh
 jupyter lab workshop_cpu_short.ipynb
 ```
 
-Cloning this public repository needs no authentication. Installing the runtime
-requires access to the private repository and Git authentication as described below.
-For this clone route, skip `ppg-workshop init`: the notebooks and configs are already
-here, and the notebook's first cell creates missing local data/output folders.
+In Jupyter, select **PPG Workshop Showcase** as the kernel, then run cells from top
+to bottom using **Shift+Enter**. If the wrong kernel is selected, use
+**Kernel -> Change Kernel**. The first executable cell creates local workspace folders.
+
+Run the download cells before the live session. DaLiA is about 2.7 GB compressed,
+and initial download/extraction is separate from training time. The full notebook's
+default teaching profile passed on the instructor PC in about 57 seconds **with
+assets already downloaded**; that is not a promise for every machine or the full-data profile.
+
+To view results immediately without running code, open
+[the executed full notebook](examples/workshop_with_outputs.ipynb). Use the clean
+notebooks at the repository root for your own run.
+
+### 8. Come back later
+
+You do not need to reinstall or recreate the environment each time. In a new conda
+terminal, activate it, enter your existing clone and launch Jupyter:
+
+```sh
+conda activate ppg_workshop_showcase
+cd path/to/ppg-workshop
+jupyter lab workshop.ipynb
+```
+
+Replace `path/to/ppg-workshop` with the folder you cloned in step 4. Keep Jupyter's
+terminal open while working; stop the server with **Ctrl+C** when finished.
 
 ## Install with pip (private access)
 
