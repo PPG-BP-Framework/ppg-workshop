@@ -1,0 +1,96 @@
+data:
+  name: dalia_workshop
+  experiment_ready_hdf5_path: ppg+dalia/experiment_ready/single_source/BVP/window/ppg_dalia_bvp_window_heart_rate.h5
+  split_artifact_path: ppg+dalia/experiment_ready/single_source/BVP/window/ppg_dalia_bvp_window_heart_rate/configs/kfold_3_seed123/splits/group_splits.json
+  split_transform_artifact_path: ppg+dalia/experiment_ready/single_source/BVP/window/ppg_dalia_bvp_window_heart_rate/configs/kfold_3_seed123/fits/split_z_norm.json
+  x_set_indices:
+  - 0
+  y_set_indices:
+  - 0
+  train_x_labels_subset: null
+  test_x_labels_subset: null
+  fallback_to_synthetic: false
+preprocessing:
+  apply_split_transforms: true
+training:
+  backend: torch
+  n_epochs: 12
+  batch_size: 64
+  learning_rate: 0.003
+  dataloader_seed: 123
+  device: cpu
+  loading_mode: ram_prefetch
+  cache_in_memory: true
+  num_workers: 0
+  pin_memory: false
+  drop_last: false
+  shuffle: true
+  persistent_workers: false
+  prefetch_factor: null
+  log_every_epochs: 1
+  progress_bar: false
+  grad_clip_norm: null
+  accumulate_grad_batches: 1
+  use_amp: false
+  amp_dtype: float16
+  limit_train_batches: null
+  limit_val_batches: null
+  criterion:
+    name: mse
+    kwargs: {}
+  optimizer:
+    name: adam
+    kwargs: {}
+  grid_search_config:
+    param_grid:
+      learning_rate:
+      - 0.003
+  scheduler:
+    name: none
+    kwargs: {}
+  early_stopping:
+    enabled: true
+    patience: 4
+    min_delta: 0.0
+    monitor: val_loss
+    mode: min
+  checkpointing:
+    save_best: true
+    best_name: checkpoint_best_specialized_mlp.pkl
+    save_early_stopping: false
+    early_stopping_name: checkpoint_early_stopping.pkl
+    save_last: false
+    last_name: checkpoint_last.pkl
+  pre_embedding_batch_size: 64
+testing:
+  batch_size: 256
+  device: cpu
+  loading_mode: ram_prefetch
+  cache_in_memory: true
+  num_workers: 0
+  pin_memory: false
+  persistent_workers: false
+  prefetch_factor: null
+  return_predictions: true
+split_configs:
+- split_strategy: k_fold
+  n_folds: 3
+  split_group_by: subject_id
+  split_train_fraction: 0.8
+  seed: 123
+saving:
+  save_predictions: true
+  save_split_weights: true
+  save_best_weights: false
+  checkpoint_parts:
+    save_backbone: auto
+    save_neck: false
+    save_head: true
+  prediction_storage: per_split
+experiment:
+  output_dir: results/ppg_dalia_specialized_mlp_bvp_hr_3fold_1epoch_smoke
+  continue_on_error: false
+  write_jsonl: true
+  jsonl_name: workshop_runs.jsonl
+  stat_metrics_function: ppg_experiment_framework.utils.stats_utils.metric_set_augsburg
+  model_net_file: workshop

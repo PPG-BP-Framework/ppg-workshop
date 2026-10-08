@@ -1,0 +1,10 @@
+name: ppg_workshop_showcase
+channels:
+- conda-forge
+- nodefaults
+dependencies:
+- python=3.11
+- pip
+- git
+- pip:
+  - ppg-experiment-framework[workshop] @ git+https://github.com/mamerm/ppg-workshop-runtime.git@v0.1.3

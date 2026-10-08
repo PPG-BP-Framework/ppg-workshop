@@ -1,0 +1,46 @@
+seed: 123
+torch_threads: 4
+sample_rate: 125.0
+window_seconds: 8.0
+val_fraction: 0.25
+quick:
+  subjects:
+  - S1
+  - S2
+  - S3
+  - S4
+  - S5
+  - S6
+  max_duration_seconds: 600
+  epochs: 12
+full:
+  subjects: null
+  max_duration_seconds: null
+  epochs: 30
+dalia:
+  url: https://archive.ics.uci.edu/ml/machine-learning-databases/00495/data.zip
+  citation: https://doi.org/10.24432/C53890
+papagei:
+  url: https://zenodo.org/records/13983110/files/papagei_s.pt?download=1
+  checksum: a4cdb32392e2a7b25999128af92813b5
+  algorithm: md5
+  citation: https://doi.org/10.5281/zenodo.13983110
+split:
+  split_strategy: k_fold
+  n_folds: 3
+  split_group_by: subject_id
+  seed: 123
+plot_colors:
+  MLP: '#0072B2'
+  PaPaGei-S: '#009E73'
+  MLP exercise: '#E69F00'
+cpu_short:
+  subjects:
+  - S1
+  - S2
+  - S3
+  - S4
+  - S5
+  - S6
+  max_duration_seconds: 120
+  epochs: 5

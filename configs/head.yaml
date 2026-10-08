@@ -1,0 +1,12 @@
+name: "mlp_2layer_single_output"
+
+head:
+  net_folder: "base"
+  net_file: "MLPHead"
+  params:
+    d_model: 512
+    out_classes: 1
+    mlp_config:
+      hidden_dims: [512, 256]
+      dropout: 0.1
+      activation: "gelu"

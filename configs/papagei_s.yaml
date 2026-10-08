@@ -1,0 +1,28 @@
+model_name: papagei-s
+model_wrapper: foundation
+foundation_train_mode: frozen
+reload_backbone: true
+backbone:
+  net_folder: custom/papagei
+  net_file: ResNet1DMoE_Net
+  params:
+    in_channels: 1
+    base_filters: 32
+    kernel_size: 3
+    stride: 2
+    groups: 1
+    n_block: 18
+    n_classes: 512
+    n_experts: 3
+    downsample_gap: 2
+    increasefilter_gap: 4
+    use_bn: true
+    use_do: true
+    verbose: false
+    use_projection: false
+    unfreeze_from: 20
+net_type: torch
+data_transformer: null
+embedder_batch_size: 64
+weight_file_location: original/papagei-s/weights.pth
+strict_loading_backbone_state_dict: true

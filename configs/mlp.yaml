@@ -1,0 +1,16 @@
+model_name: "specialized_mlp_ppg_dalia_bvp_8s_hr"
+model_wrapper: "standalone"
+net_type: "torch"
+data_transformer: null
+
+backbone:
+  net_folder: "example"
+  net_file: "MLP"
+  params:
+    in_channels: 1
+    signal_length: 400
+    hidden_size: 128
+    output_size: 1
+    dropout_prob: 0.2
+    unfreeze_from: 0
+    verbose: false

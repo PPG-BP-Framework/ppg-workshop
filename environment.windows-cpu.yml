@@ -1,0 +1,11 @@
+name: ppg_workshop_showcase
+channels:
+- conda-forge
+- nodefaults
+dependencies:
+- python=3.11.17
+- pip
+- git
+- pip:
+  - -r requirements-tested-windows-cpu.txt
+  - ppg-experiment-framework[workshop] @ git+https://github.com/mamerm/ppg-workshop-runtime.git@v0.1.3

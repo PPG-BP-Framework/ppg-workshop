@@ -1,0 +1,17 @@
+# Keep private distribution artifacts and local data out of the public template.
+packages/*.whl
+bundles/
+data/
+weights/
+results/
+figures/
+tasks/*/results/
+tasks/*/figures/
+*.executed.ipynb
+.ipynb_checkpoints/
+__pycache__/
+
+*.egg-info/
+.env
+*.log
+environment.local.yml
