@@ -191,3 +191,11 @@ includes the worked grid, participant grid, frozen PaPaGei comparison and IG.
 ![Live learning curves](preview/cpu_short_learning_curves.png)
 
 ![Selected-window Integrated Gradients](preview/cpu_short_window_ig.png)
+
+## Full notebook with saved outputs
+
+[View the executed full workshop](examples/workshop_with_outputs.ipynb), including
+all plots, model comparisons, the advanced API tour and Integrated Gradients.
+All 26 executable cells passed in **56.7 seconds on CPU** on 8 October 2026
+using the default quick profile and cached downloads. Run the clean
+`workshop.ipynb` at the repository root for your own experiment.
